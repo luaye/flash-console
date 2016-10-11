@@ -57,8 +57,8 @@ package com.junkbyte.console
 
 		public static const VERSION:Number = 2.6;
 		public static const VERSION_STAGE:String = "";
-		public static const BUILD:int = 611;
-		public static const BUILD_DATE:String = "2012/02/22 00:11";
+		public static const BUILD:int = 614;
+		public static const BUILD_DATE:String = "2016/10/11 22:50";
 		//
 		public static const LOG:uint = 1;
 		public static const INFO:uint = 3;
@@ -501,8 +501,8 @@ package com.junkbyte.console
 		/**
 		 * @copy com.junkbyte.console.Cc#addSlashCommand()
 		 */
-		public function addSlashCommand(name:String, callback:Function, desc:String = "", alwaysAvailable:Boolean = true, endOfArgsMarker:String = ";"):void{
-			_cl.addSlashCommand(name, callback, desc, alwaysAvailable, endOfArgsMarker);
+		public function addSlashCommand(name:String, callback:Function, desc:String = "", alwaysAvailable:Boolean = true, endOfArgsMarker:String = ";", addCommandNameAsArg:Boolean = false):void{
+			_cl.addSlashCommand(name, callback, desc, alwaysAvailable, endOfArgsMarker, addCommandNameAsArg);
 		}
 		//
 		// LOGGING

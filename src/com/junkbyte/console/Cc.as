@@ -473,9 +473,10 @@ package com.junkbyte.console {
 		 * @param  alwaysAvailable	If set to false this command will NOT be avaviable when Cc.config.commandLineAllowed is false; default = true
 		 * @param  endOfArgsMarker	Marker string used to determine end of command argument so that remaining string can be parsed as next line. 
 		 * 							null = whole string always passed as argument. default = ";"
+		 * @param  addCommandNameAsArg If true, name will be passed to call back as the first argument
 		 */
-		public static function addSlashCommand(name:String, callback:Function, description:String = "", alwaysAvailable:Boolean = true, endOfArgsMarker:String = ";"):void{
-			if(_console ) _console.addSlashCommand(name, callback, description, alwaysAvailable, endOfArgsMarker);
+		public static function addSlashCommand(name:String, callback:Function, description:String = "", alwaysAvailable:Boolean = true, endOfArgsMarker:String = ";", addCommandNameAsArg:Boolean = false):void{
+			if(_console ) _console.addSlashCommand(name, callback, description, alwaysAvailable, endOfArgsMarker, addCommandNameAsArg);
 		}
 		//
 		// Memory management tools
