@@ -167,15 +167,15 @@ package com.junkbyte.console.core
 		public function get scopeString():String{
 			return config.commandLineAllowed?_scopeStr:"";
 		}
-		public function addCLCmd(n:String, callback:Function, desc:String, allow:Boolean = false, endOfArgsMarker:String = ";"):void{
+		public function addCLCmd(n:String, callback:Function, desc:String, allow:Boolean = false, endOfArgsMarker:String = ";", addCommandNameAsArg:Boolean = false):void{
 			var split:Array = n.split("|");
 			for(var i:int = 0; i<split.length; i++){
 				n = split[i];
-				_slashCmds[n] = new SlashCommand(n, callback, desc, false, allow, endOfArgsMarker);
+				_slashCmds[n] = new SlashCommand(n, callback, desc, false, allow, endOfArgsMarker, addCommandNameAsArg);
 				if(i>0) _slashCmds.setPropertyIsEnumerable(n, false);
 			}
 		}
-		public function addSlashCommand(n:String, callback:Function, desc:String = "", alwaysAvailable:Boolean = true, endOfArgsMarker:String = ";"):void{
+		public function addSlashCommand(n:String, callback:Function, desc:String = "", alwaysAvailable:Boolean = true, endOfArgsMarker:String = ";", addCommandNameAsArg:Boolean = false):void{
 			n = n.replace(/[^\w]*/g, "");
 			if(_slashCmds[n] != null){
 				var prev:SlashCommand = _slashCmds[n];
@@ -184,7 +184,7 @@ package com.junkbyte.console.core
 				}
 			}
 			if(callback == null) delete _slashCmds[n];
-			else _slashCmds[n] = new SlashCommand(n, callback, LogReferences.EscHTML(desc), true, alwaysAvailable, endOfArgsMarker);
+			else _slashCmds[n] = new SlashCommand(n, callback, LogReferences.EscHTML(desc), true, alwaysAvailable, endOfArgsMarker, addCommandNameAsArg);
 		}
 		public function run(str:String, saves:Object = null):* {
 			if(!str) return;
@@ -266,9 +266,9 @@ package com.junkbyte.console.core
 						}
 					}
 					if(param.length == 0){
-						slashcmd.f();
+						slashcmd.nameArg ? slashcmd.f(slashcmd.n) : slashcmd.f();
 					} else {
-						slashcmd.f(param);
+						slashcmd.nameArg ? slashcmd.f(slashcmd.n, param) : slashcmd.f(param);
 					}
 					if(restStr){
 						run(restStr);
@@ -433,12 +433,14 @@ internal class SlashCommand{
 	public var user:Boolean;
 	public var allow:Boolean;
 	public var endMarker:String;
-	public function SlashCommand(nn:String, ff:Function, dd:String, cus:Boolean, permit:Boolean, argsMarker:String){
+	public var nameArg:Boolean;
+	public function SlashCommand(nn:String, ff:Function, dd:String, cus:Boolean, permit:Boolean, argsMarker:String, nameAsArg:Boolean){
 		n = nn;
 		f = ff;
 		d = dd?dd:"";
 		user = cus;
 		allow = permit;
 		endMarker = argsMarker;
+		nameArg = nameAsArg;
 	}
 }
